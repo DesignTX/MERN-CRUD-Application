@@ -4,7 +4,15 @@ const { check, validationResult } = require('express-validator')
 
 const Customer = require('../models/Customer');
 
-// GET REQUEST, CREATE, ADD, DELETE, UPDATE.
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const customer = await Customer.findOne({ _id: id })
+    res.status(200).send(customer);
+  } catch (err) {
+    res.status(400).send(`Customer with ID ${id} not found.`);
+  }
+});
 
 router.post('/', [
   check('name', 'Name Required')
@@ -38,12 +46,13 @@ router.post('/', [
       await customer.save();
 
       console.log(req.body);
-      res.send('Customer Added');
+      res.status(201).send('Customer Added');
 
     } catch (err) {
       console.log(err.message);
       res.status(500).send('Server Error');
     }
-  })
+  }
+)
 
 module.exports = router;
