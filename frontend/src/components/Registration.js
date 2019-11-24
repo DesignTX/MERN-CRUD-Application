@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+// import { Link } from 'react-router-dom';
+import { setAlert } from '../actions/alert';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
-const Registration = () => {
+const Registration = ({ setAlert }) => {
   // formData is your state, setFormData is same as this.setstate (Personal Learning Note)
   const [formData, setFormData] = useState({
     name: '',
@@ -21,6 +25,11 @@ const Registration = () => {
 
   const onSubmit = async event => {
     event.preventDefault();
+    if (name == 'Tony') {
+      setAlert('test', 'danger');
+    } else {
+      console.log('SUCCESS');
+    }
     const newCustomer = {
       name,
       dob,
@@ -94,4 +103,8 @@ const Registration = () => {
   )
 }
 
-export default Registration;
+Registration.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+}
+
+export default connect(null, { setAlert })(Registration);
