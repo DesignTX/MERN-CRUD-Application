@@ -10,11 +10,11 @@ const Navbar = () => {
       </h1>
       <ul>
         <li>
-          <Link to='Registration'>Add Customer
+          <Link to='CustomerForm'>Add Customer
           </Link>
         </li>
         <li>
-          <Link to='/CustomerList'>Edit Customer
+          <Link to='/CustomerList'>View Customers
           </Link>
         </li>
       </ul>

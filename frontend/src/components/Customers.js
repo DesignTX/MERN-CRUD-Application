@@ -12,7 +12,7 @@ const Customers = ({ getCustomers, customer: { customers, loading } }) => {
   return loading ? <Fragment> Loading Customer List... </Fragment> : <Fragment>
     <h1 className="large text-primary fas fa-user">
       &nbsp;&nbsp;Customer List</h1>
-    {/* {Customerlist} */}
+    {/* {CustomersItem} */}
     <div className="customers">
       {customers.map(customer => (
         < CustomerItem key={customer._id} customer={customer} />

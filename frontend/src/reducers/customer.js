@@ -1,4 +1,4 @@
-import { GET_CUSTOMERS, DELETE_CUSTOMER, CUSTOMER_ERROR } from '../actions/constants';
+import { GET_CUSTOMERS, ADD_CUSTOMER, DELETE_CUSTOMER, CUSTOMER_ERROR } from '../actions/constants';
 
 const initialState = {
   customers: [],
@@ -17,6 +17,12 @@ export default function (state = initialState, action) {
         customers: payload,
         loading: false
       };
+    case ADD_CUSTOMER:
+      return {
+        ...state,
+        customers: [...state.customers, payload],
+        loading: false
+      }
     case DELETE_CUSTOMER:
       return {
         ...state,

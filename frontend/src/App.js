@@ -2,8 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
-import Registration from './components/Registration';
-import Edit from './components/Edit';
+import CustomerForm from './components/CustomerForm';
 import Customers from './components/Customers';
 import Alert from './components/layout/Alert';
 // Redux
@@ -21,8 +20,7 @@ const App = () => (
         <section className="container">
           <Alert />
           <Switch>
-            <Route exact path="/registration" component={Registration} />
-            <Route exact path="/edit" component={Edit} />
+            <Route exact path="/customerForm" component={CustomerForm} />
             <Route exact path="/customerList" component={Customers} />
           </Switch>
         </section>
