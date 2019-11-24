@@ -1,9 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import {
-  GET_CUSTOMERS,
-  CUSTOMER_ERROR
-} from './constants';
+import { GET_CUSTOMERS, CUSTOMER_ERROR } from './constants';
 
 // Get customers
 export const getCustomers = () => async dispatch => {
