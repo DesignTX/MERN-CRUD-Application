@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
+import { deleteCustomer } from '../actions/customer';
 
-const CustomerItem = ({ customer: { _id, name, dob, email, phone } }) => {
+const CustomerItem = ({
+  deleteCustomer,
+  customer: { _id, name, dob, email, phone } }) => {
   return (
     <div class="post bg-white p-1 my-1">
       <div>
         <a href="profile.html">
-          <img class="round-img" alt="" />
           <h4>{name}</h4>
         </a>
       </div>
@@ -26,10 +28,7 @@ const CustomerItem = ({ customer: { _id, name, dob, email, phone } }) => {
         <a href="post.html" class="btn btn-primary">
           Edit
         </a>
-        <button
-          type="button"
-          class="btn btn-danger"
-        >
+        <button onClick={event => deleteCustomer(_id)} type="button" class="btn btn-danger">
           Delete
         </button>
       </div>
@@ -38,7 +37,8 @@ const CustomerItem = ({ customer: { _id, name, dob, email, phone } }) => {
 }
 
 CustomerItem.propTypes = {
-  customer: PropTypes.object.isRequired
+  customer: PropTypes.object.isRequired,
+  deleteCustomer: PropTypes.func.isRequired
 }
 
-export default connect(null, {})(CustomerItem)
+export default connect(null, { deleteCustomer })(CustomerItem)

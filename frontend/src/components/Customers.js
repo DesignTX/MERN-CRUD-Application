@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux';
-import CustomerItem from './CustomerItem';
+import CustomerItem from './CustomerItem.js';
 import { getCustomers } from '../actions/customer';
 
 const Customers = ({ getCustomers, customer: { customers, loading } }) => {
@@ -9,11 +9,9 @@ const Customers = ({ getCustomers, customer: { customers, loading } }) => {
     getCustomers();
   }, [getCustomers]);
 
-  return loading ? <Fragment> Loading </Fragment> : <Fragment>
-    <h1 className="large text-primary">Customers</h1>
-    <p className="lead">
-      <i className="fas fa-user"></i> Test
-    </p>
+  return loading ? <Fragment> Loading Customer List... </Fragment> : <Fragment>
+    <h1 className="large text-primary fas fa-user">
+      &nbsp;&nbsp;Customer List</h1>
     {/* {Customerlist} */}
     <div className="customers">
       {customers.map(customer => (

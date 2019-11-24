@@ -1,7 +1,4 @@
-import {
-  GET_CUSTOMERS,
-  CUSTOMER_ERROR
-} from '../actions/constants';
+import { GET_CUSTOMERS, DELETE_CUSTOMER, CUSTOMER_ERROR } from '../actions/constants';
 
 const initialState = {
   customers: [],
@@ -18,6 +15,12 @@ export default function (state = initialState, action) {
       return {
         ...state,
         customers: payload,
+        loading: false
+      };
+    case DELETE_CUSTOMER:
+      return {
+        ...state,
+        customers: state.customers.filter(customer => customer._id !== payload),
         loading: false
       };
     case CUSTOMER_ERROR:
