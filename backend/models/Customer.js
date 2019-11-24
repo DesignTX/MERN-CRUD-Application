@@ -6,7 +6,7 @@ const CustomerSchema = new mongoose.Schema({
     required: true
   },
   dob: {
-    type: String
+    type: Date
   },
   email: {
     type: String,
