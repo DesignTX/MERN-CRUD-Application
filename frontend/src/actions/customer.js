@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { GET_CUSTOMERS, ADD_CUSTOMER, DELETE_CUSTOMER, CUSTOMER_ERROR } from './constants';
+import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER, UPDATE_CUSTOMER, DELETE_CUSTOMER, CUSTOMER_ERROR } from './constants';
 
 // Get Customers
 export const getCustomers = () => async dispatch => {
@@ -19,23 +19,103 @@ export const getCustomers = () => async dispatch => {
   }
 };
 
-// Add Customer
-export const addCustomer = formData => async dispatch => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
+// Get Single Customer
+export const getCurrentCustomer = (id) => async dispatch => {
   try {
-    const response = await axios.post('http://localhost:5000/routes', formData, config);
+    const response = await axios.get(`http://localhost:5000/routes/${id}`);
 
     dispatch({
-      type: ADD_CUSTOMER,
+      type: GET_CUSTOMER,
+      payload: response.data
+    });
+  } catch (err) {
+    dispatch({
+      type: CUSTOMER_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+// Add Customer
+// export const addCustomer = formData => async dispatch => {
+//   const config = {
+//     headers: {
+//       'Content-Type': 'application/json'
+//     }
+//   }
+//   try {
+//     const response = await axios.post('http://localhost:5000/routes', formData, config);
+
+//     dispatch({
+//       type: ADD_CUSTOMER,
+//       payload: response.data
+//     });
+
+//     dispatch(setAlert('Customer Deleted', 'success'));
+//   } catch (err) {
+//     dispatch({
+//       type: CUSTOMER_ERROR,
+//       payload: { msg: err.response.statusText, status: err.response.status }
+//     });
+//   }
+// };
+
+export const addCustomer = (formData, history, edit = false) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    const response = await axios.post('http://localhost:5000/routes/', formData, config);
+
+    dispatch({
+      type: GET_CUSTOMER,
       payload: response.data
     });
 
-    dispatch(setAlert('Customer Deleted', 'success'));
+    dispatch(setAlert(edit ? 'Profile Updated' : 'Profile Created'));
+
+    if (!edit) {
+      history.push('/CustomerList');
+    }
+  } catch (error) {
+    const errors = error.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: CUSTOMER_ERROR,
+      payload: { msg: error.response.statusText, status: error.response.status }
+    });
+  }
+}
+
+// Update Customers
+export const updateCustomer = (formData, history, edit = true, id) => async dispatch => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+
+    const response = await axios.get(`http://localhost:5000/routes/`, formData, config)
+
+    dispatch({
+      type: GET_CUSTOMERS,
+      payload: response.data
+    });
+
+    dispatch(setAlert('Profile Update', 'success'));
   } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
     dispatch({
       type: CUSTOMER_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
@@ -61,3 +141,22 @@ export const deleteCustomer = id => async dispatch => {
     });
   }
 };
+
+//Test Customer
+// export const updateCustomer = id => async dispatch => {
+//   try {
+//     const response = await axios.put(`http://localhost:5000/routes/${id}`);
+
+//     dispatch({
+//       type: GET_CUSTOMER,
+//       payload: id
+//     });
+
+//     dispatch(setAlert('Customer Updated', 'success'));
+//   } catch (err) {
+//     dispatch({
+//       type: CUSTOMER_ERROR,
+//       payload: { msg: err.response.statusText, status: err.response.status }
+//     });
+//   }
+// };

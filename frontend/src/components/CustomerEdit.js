@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-// import { Link } from 'react-router-dom';
-import { setAlert } from '../actions/alert';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setAlert } from '../actions/alert';
+import { addCustomer, updateCustomer } from '../actions/customer';
+import CustomerItem from './CustomerItem';
 import axios from 'axios';
 
-const Registration = ({ setAlert }) => {
+const EditCustomer = ({ customer: { customer, loading }, addCustomer, updateCustomer, history }) => {
   // formData is your state, setFormData is same as this.setstate (Personal Learning Note)
   const [formData, setFormData] = useState({
     name: '',
@@ -14,43 +16,30 @@ const Registration = ({ setAlert }) => {
     phone: ''
   });
 
+  console.log(updateCustomer)
+  // useEffect(() => {
+  //   updateCustomer();
+
+  //   setFormData({
+  //     // name: loading || !customer.name ? '' : customer.name,
+  //     // dob: loading || !state.dob ? '' : state.dob,
+  //     // email: loading || !state.email ? '' : state.email,
+  //     // phone: loading || !state.phone ? '' : state.phone
+  //   });
+  // }, [loading]);
+
   const { name, dob, email, phone } = formData;
 
-  console.log('name', name)
-  console.log('dob', dob)
-  console.log('email', email)
-  console.log('phone', phone)
+  // console.log('name', name)
+  // console.log('dob', dob)
+  // console.log('email', email)
+  // console.log('phone', phone)
 
   const onChange = event => setFormData({ ...formData, [event.target.name]: event.target.value });
 
-  const onSubmit = async event => {
+  const onSubmit = event => {
     event.preventDefault();
-    if (name === 'Tony') {
-      setAlert('test', 'danger');
-    } else {
-      console.log('SUCCESS');
-    }
-    const newCustomer = {
-      name,
-      dob,
-      email,
-      phone
-    }
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-
-      const body = JSON.stringify(newCustomer);
-
-      const response = await axios.post('http://localhost:5000/routes', body, config);
-      console.log(response.data)
-    } catch (err) {
-      console.error(err.response.data);
-    }
-    console.log(formData)
+    addCustomer(formData, history)
   }
 
   return (
@@ -97,14 +86,21 @@ const Registration = ({ setAlert }) => {
             maxLength='10'
           />
         </div>
-        <input type="submit" className="btn btn-primary" value="Register" />
+        <input type="submit" className="btn btn-primary" value="Register" to='/CustomerList' />
       </form>
     </>
   )
 }
 
-Registration.propTypes = {
-  setAlert: PropTypes.func.isRequired,
+EditCustomer.propTypes = {
+  addCustomer: PropTypes.func.isRequired,
+  updateCustomer: PropTypes.func.isRequired,
+  customer: PropTypes.object.isRequired,
 }
 
-export default connect(null, { setAlert })(Registration);
+const mapStateToProps = state => ({
+  customer: state.customer
+});
+
+
+export default connect(mapStateToProps, { addCustomer, updateCustomer })(withRouter(EditCustomer))

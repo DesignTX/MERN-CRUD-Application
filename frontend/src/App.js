@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import CustomerForm from './components/CustomerForm';
+import CustomerEdit from './components/CustomerEdit';
 import Customers from './components/Customers';
 import Alert from './components/layout/Alert';
 // Redux
@@ -21,6 +22,7 @@ const App = () => (
           <Alert />
           <Switch>
             <Route exact path="/customerForm" component={CustomerForm} />
+            <Route exact path="/customerEdit" component={CustomerEdit} />
             <Route exact path="/customerList" component={Customers} />
           </Switch>
         </section>

@@ -21,6 +21,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+
 // Create Customer
 router.post('/', [
   check('name', 'Name Required')
@@ -90,6 +91,7 @@ router.put("/:id", [
         // { new: true} sends back updated customer
         (req.params.id, updatedCustomerDetails, { new: true });
       res.status(200).send(updatedCustomer)
+      res.json(updatedCustomers)
     } catch (err) {
       return res.status(400).send(`Customer updating error ${err}`)
     }

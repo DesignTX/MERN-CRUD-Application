@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setAlert } from '../actions/alert';
 import { addCustomer } from '../actions/customer';
 import axios from 'axios';
 
-const CustomerForm = ({ addCustomer }) => {
+const CustomerForm = ({ addCustomer, history }) => {
   // formData is your state, setFormData is same as this.setstate (Personal Learning Note)
   const [formData, setFormData] = useState({
     name: '',
@@ -23,35 +24,11 @@ const CustomerForm = ({ addCustomer }) => {
 
   const onChange = event => setFormData({ ...formData, [event.target.name]: event.target.value });
 
-  const onSubmit = async event => {
+  const onSubmit = event => {
     event.preventDefault();
-    if (name === 'Tony') {
-      setAlert('test', 'danger');
-    } else {
-      console.log('SUCCESS');
-    }
-    const newCustomer = {
-      name,
-      dob,
-      email,
-      phone
-    }
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-
-      const body = JSON.stringify(newCustomer);
-
-      const response = await axios.post('http://localhost:5000/routes', body, config);
-      console.log(response.data)
-    } catch (err) {
-      console.error(err.response.data);
-    }
-    console.log(formData)
+    addCustomer(formData, history)
   }
+
   return (
     <>
       <p className="lead"><i className="fas fa-user"></i> New Customer</p>
@@ -96,18 +73,19 @@ const CustomerForm = ({ addCustomer }) => {
             maxLength='10'
           />
         </div>
-        <input type="submit" className="btn btn-primary" value="Register" onSubmit={event => {
-          event.preventDefault();
-          addCustomer({ name, dob, email, phone });
-
-        }} />
+        <input type="submit" className="btn btn-primary" value="Register" to='/CustomerList' />
       </form>
     </>
   )
 }
 
 CustomerForm.propTypes = {
-
+  addCustomer: PropTypes.func.isRequired,
 }
 
-export default connect(null, { addCustomer })(CustomerForm)
+const mapStateToProps = state => ({
+  customer: state.customer
+});
+
+
+export default connect(mapStateToProps, { addCustomer })(withRouter(CustomerForm))
