@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const Registration = () => {
   // formData is your state, setFormData is same as this.setstate (Personal Learning Note)
@@ -10,28 +11,50 @@ const Registration = () => {
   });
 
   const { name, dob, email, phone } = formData;
+
   console.log('name', name)
   console.log('dob', dob)
   console.log('email', email)
   console.log('phone', phone)
-  const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = e => {
-    e.preventDefault();
+  const onChange = event => setFormData({ ...formData, [event.target.name]: event.target.value });
+
+  const onSubmit = async event => {
+    event.preventDefault();
+    const newCustomer = {
+      name,
+      dob,
+      email,
+      phone
+    }
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+
+      const body = JSON.stringify(newCustomer);
+
+      const response = await axios.post('http://localhost:5000/routes', body, config);
+      console.log(response.data)
+    } catch (err) {
+      console.error(err.response.data);
+    }
     console.log(formData)
   }
 
   return (
     <>
       <p className="lead"><i className="fas fa-user"></i> New Customer</p>
-      <form className="form" onSubmit={e => onSubmit(e)}>
+      <form className="form" onSubmit={event => onSubmit(event)}>
         <div className="form-group">
           <input
             type="text"
             placeholder="Name"
             name="name"
             value={name}
-            onChange={e => onChange(e)}
+            onChange={event => onChange(event)}
             required
           />
         </div>
@@ -41,7 +64,7 @@ const Registration = () => {
             placeholder="Date of Birth"
             name="dob"
             value={dob}
-            onChange={e => onChange(e)}
+            onChange={event => onChange(event)}
           />
         </div>
         <div className="form-group">
@@ -50,7 +73,7 @@ const Registration = () => {
             placeholder="Email Address"
             name="email"
             value={email}
-            onChange={e => onChange(e)}
+            onChange={event => onChange(event)}
             required
           />
         </div>
@@ -60,7 +83,7 @@ const Registration = () => {
             placeholder="Phone Number"
             name="phone"
             value={phone}
-            onChange={e => onChange(e)}
+            onChange={event => onChange(event)}
             minLength='8'
             maxLength='10'
           />
