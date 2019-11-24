@@ -14,7 +14,7 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link to='Edit'>Edit Customer
+          <Link to='/customers'>Edit Customer
           </Link>
         </li>
       </ul>

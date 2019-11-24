@@ -25,7 +25,7 @@ const Registration = ({ setAlert }) => {
 
   const onSubmit = async event => {
     event.preventDefault();
-    if (name == 'Tony') {
+    if (name === 'Tony') {
       setAlert('test', 'danger');
     } else {
       console.log('SUCCESS');
