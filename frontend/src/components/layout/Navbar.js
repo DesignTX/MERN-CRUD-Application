@@ -1,14 +1,22 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   return (
     <nav className="navbar">
       <h1>
-        <a href="index.html"> Navia Coding Challenge</a>
+        <Link to='/'> Navia Coding Challenge
+        </Link>
       </h1>
       <ul>
-        <li><a href="register.html">Add Customer</a></li>
-        <li><a href="login.html">Edit Customer</a></li>
+        <li>
+          <Link to='Registration'>Add Customer
+          </Link>
+        </li>
+        <li>
+          <Link to='Edit'>Edit Customer
+          </Link>
+        </li>
       </ul>
     </nav>
   )
