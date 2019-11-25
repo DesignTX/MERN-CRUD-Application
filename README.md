@@ -60,5 +60,5 @@ mongoose
 uuid
 ```
 ### <a id="Learning"></a>Learning
-Learning and implement redux for the first time during this challenge was extremely fun, I had a few bumps but ultimately I see how efficient using redux is at handling state management, being alot more efficient at handling states to make changes from the front and back end, instead of passing down states and props through multiple components to retreieve and update.
+Learning and implement redux for the first time during this challenge was extremely fun, I had a few bumps but ultimately I see how efficient using redux is at handling state management, being alot more efficient at handling states to make changes from the front and back end, instead of passing down states and props through multiple components to retrieve and update.
 
