@@ -10,7 +10,7 @@ Create a web application with CRUD using React, Redux, NodeJS & Mongodb.
 ## <a id="usage"></a>Usage
 ### Clone Repository
 ```
-https://github.com/DesignTX/Navia-Coding-Challenge.git
+$ git clone https://github.com/DesignTX/Navia-Coding-Challenge.git
 ```
 ### Install Required Files
 ```
