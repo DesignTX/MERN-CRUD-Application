@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setAlert } from '../actions/alert';
 import { addCustomer, updateCustomer } from '../actions/customer';
-import CustomerItem from './CustomerItem';
-import axios from 'axios';
 
-const EditCustomer = ({ customer: { customer, loading }, addCustomer, updateCustomer, history }) => {
+const EditCustomer = ({ customer: { customer }, addCustomer, updateCustomer, history }) => {
   // formData is your state, setFormData is same as this.setstate (Personal Learning Note)
   const [formData, setFormData] = useState({
     name: '',
@@ -16,35 +13,23 @@ const EditCustomer = ({ customer: { customer, loading }, addCustomer, updateCust
     phone: ''
   });
 
-  console.log(updateCustomer)
-  // useEffect(() => {
-  //   updateCustomer();
-
-  //   setFormData({
-  //     // name: loading || !customer.name ? '' : customer.name,
-  //     // dob: loading || !state.dob ? '' : state.dob,
-  //     // email: loading || !state.email ? '' : state.email,
-  //     // phone: loading || !state.phone ? '' : state.phone
-  //   });
-  // }, [loading]);
-
   const { name, dob, email, phone } = formData;
 
-  // console.log('name', name)
-  // console.log('dob', dob)
-  // console.log('email', email)
-  // console.log('phone', phone)
 
   const onChange = event => setFormData({ ...formData, [event.target.name]: event.target.value });
 
   const onSubmit = event => {
     event.preventDefault();
-    addCustomer(formData, history)
+    //Hardcoded, to grab customer id. Refactor when everythings working
+    let { pathname } = history.location
+    console.log(pathname.split('/'))
+    let id = pathname.split('/')[2]
+    updateCustomer(formData, id)
   }
 
   return (
     <>
-      <p className="lead"><i className="fas fa-user"></i> New Customer</p>
+      <p className="lead"><i className="fas fa-user"></i> Edit Customer</p>
       <form className="form" onSubmit={event => onSubmit(event)}>
         <div className="form-group">
           <input
@@ -86,7 +71,7 @@ const EditCustomer = ({ customer: { customer, loading }, addCustomer, updateCust
             maxLength='10'
           />
         </div>
-        <input type="submit" className="btn btn-primary" value="Register" to='/CustomerList' />
+        <input type="submit" className="btn btn-primary" value="Edit" to='/CustomerList' />
       </form>
     </>
   )

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
@@ -27,7 +27,7 @@ const CustomerItem = ({
         <p className="post-date">
           Date of Birth: <Moment format='DD/MM/YYYY'>{dob}</Moment>
         </p>
-        <Link to="CustomerEdit" type="button" className="btn btn-primary">
+        <Link to={`CustomerEdit/${_id}`} type="button" className="btn btn-primary">
           Edit
         </Link>
         <button onClick={event => deleteCustomer(_id)} type="button" className="btn btn-danger">

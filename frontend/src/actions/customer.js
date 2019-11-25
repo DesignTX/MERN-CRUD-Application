@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { GET_CUSTOMERS, GET_CUSTOMER, ADD_CUSTOMER, UPDATE_CUSTOMER, DELETE_CUSTOMER, CUSTOMER_ERROR } from './constants';
+import { GET_CUSTOMERS, GET_CUSTOMER, DELETE_CUSTOMER, CUSTOMER_ERROR } from './constants';
 
 // Get Customers
 export const getCustomers = () => async dispatch => {
@@ -35,30 +35,6 @@ export const getCurrentCustomer = (id) => async dispatch => {
     });
   }
 };
-
-// Add Customer
-// export const addCustomer = formData => async dispatch => {
-//   const config = {
-//     headers: {
-//       'Content-Type': 'application/json'
-//     }
-//   }
-//   try {
-//     const response = await axios.post('http://localhost:5000/routes', formData, config);
-
-//     dispatch({
-//       type: ADD_CUSTOMER,
-//       payload: response.data
-//     });
-
-//     dispatch(setAlert('Customer Deleted', 'success'));
-//   } catch (err) {
-//     dispatch({
-//       type: CUSTOMER_ERROR,
-//       payload: { msg: err.response.statusText, status: err.response.status }
-//     });
-//   }
-// };
 
 export const addCustomer = (formData, history, edit = false) => async dispatch => {
   try {
@@ -95,7 +71,10 @@ export const addCustomer = (formData, history, edit = false) => async dispatch =
 }
 
 // Update Customers
-export const updateCustomer = (formData, history, edit = true, id) => async dispatch => {
+export const updateCustomer = (formData, id) => async dispatch => {
+  console.log("here")
+  console.log(id)
+  console.log("asdasdasda")
   try {
     const config = {
       headers: {
@@ -103,7 +82,8 @@ export const updateCustomer = (formData, history, edit = true, id) => async disp
       }
     }
 
-    const response = await axios.get(`http://localhost:5000/routes/`, formData, config)
+    const response = await axios.put(`http://localhost:5000/routes/${id}`, formData, config)
+    console.log(response)
 
     dispatch({
       type: GET_CUSTOMERS,
@@ -126,7 +106,7 @@ export const updateCustomer = (formData, history, edit = true, id) => async disp
 // Delete Customer
 export const deleteCustomer = id => async dispatch => {
   try {
-    const response = await axios.delete(`http://localhost:5000/routes/${id}`);
+    await axios.delete(`http://localhost:5000/routes/${id}`);
 
     dispatch({
       type: DELETE_CUSTOMER,
@@ -141,22 +121,3 @@ export const deleteCustomer = id => async dispatch => {
     });
   }
 };
-
-//Test Customer
-// export const updateCustomer = id => async dispatch => {
-//   try {
-//     const response = await axios.put(`http://localhost:5000/routes/${id}`);
-
-//     dispatch({
-//       type: GET_CUSTOMER,
-//       payload: id
-//     });
-
-//     dispatch(setAlert('Customer Updated', 'success'));
-//   } catch (err) {
-//     dispatch({
-//       type: CUSTOMER_ERROR,
-//       payload: { msg: err.response.statusText, status: err.response.status }
-//     });
-//   }
-// };

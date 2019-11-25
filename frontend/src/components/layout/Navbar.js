@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+//Hardcoded Link to CustomerList, fix when other issues resolved
 const Navbar = () => {
   return (
     <nav className="navbar">
@@ -14,8 +15,8 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link to='/CustomerList'>View Customers
-          </Link>
+          <a href='http://localhost:3000/CustomerList'>View Customers
+          </a>
         </li>
       </ul>
     </nav>

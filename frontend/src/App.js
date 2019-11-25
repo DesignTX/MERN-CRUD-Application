@@ -21,8 +21,8 @@ const App = () => (
         <section className="container">
           <Alert />
           <Switch>
+            <Route exact path="/customerEdit/:id" component={CustomerEdit} />
             <Route exact path="/customerForm" component={CustomerForm} />
-            <Route exact path="/customerEdit" component={CustomerEdit} />
             <Route exact path="/customerList" component={Customers} />
           </Switch>
         </section>

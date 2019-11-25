@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { setAlert } from '../actions/alert';
 import { addCustomer } from '../actions/customer';
-import axios from 'axios';
+
 
 const CustomerForm = ({ addCustomer, history }) => {
   // formData is your state, setFormData is same as this.setstate (Personal Learning Note)
@@ -88,4 +86,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, { addCustomer })(withRouter(CustomerForm))
+export default connect(mapStateToProps, { addCustomer })(CustomerForm)
